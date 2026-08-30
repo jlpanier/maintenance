@@ -1,0 +1,24 @@
+﻿<ContentPage
+    x:Class="Main.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Main.ViewModels"
+    BackgroundColor="AliceBlue"
+    Title="Webview">
+
+    <ContentPage.BindingContext>
+        <vm:MainViewModel />
+    </ContentPage.BindingContext>
+
+
+    <Grid RowDefinitions="*" ColumnDefinitions="*">
+        <WebView
+            Grid.Column="0" Grid.Row="0"
+            Navigating="MainWebView_Navigating"
+            x:Name="MainWebView"
+            Source="{Binding Url}"
+            MinimumHeightRequest="300"
+            MinimumWidthRequest="300"
+            />
+    </Grid>
+</ContentPage>
