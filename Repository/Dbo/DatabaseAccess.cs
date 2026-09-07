@@ -36,6 +36,28 @@ namespace Repository.Dbo
         }
 
         /// <summary>
+        /// Chargement du journal de board
+        /// </summary>
+        public IEnumerable<LineEntity> GetLines()
+        {
+            lock (dbLock)
+            {
+                return Db.Query<LineEntity>("SELECT * FROM LINES");
+            }
+        }
+
+        /// <summary>
+        /// Chargement du journal de board
+        /// </summary>
+        public IEnumerable<InvoiceEntity> GetInvoices()
+        {
+            lock (dbLock)
+            {
+                return Db.Query<InvoiceEntity>("SELECT * FROM INVOICES");
+            }
+        }
+
+        /// <summary>
         /// Chargement de la configuration
         /// </summary>
         public IEnumerable<SettingsEntity> GetSettings()

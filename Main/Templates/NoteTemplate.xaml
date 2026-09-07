@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Main.ViewModels"
+    x:Class="Main.Templates.NoteTemplate">
+    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="Auto,*, Auto" >
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer 
+                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=ClickLineCommand}"
+                CommandParameter="{Binding}" />
+        </Grid.GestureRecognizers>
+        
+        <Image 
+            Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+            Source="{Binding ImagePath}"
+            Aspect="AspectFit"
+            Margin="12,6,12,6"
+            MaximumWidthRequest="100"
+            MaximumHeightRequest="100"
+            WidthRequest="120"
+            HeightRequest="120"/>
+        
+        <Label 
+            Grid.Row="0" Grid.Column="1" 
+            Text="{Binding EffectiveOn, StringFormat='{0:dd/MM/yyyy}'}"
+            Style="{StaticResource LabelItem}" 
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            FontAttributes="Bold"
+            Padding="6,0,6,0"
+            />
+        <Label 
+            Grid.Row="1" Grid.Column="1"
+            Text="{Binding Desc}"
+            Style="{StaticResource LabelItem}"
+            Padding="6,0,6,0"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            />
+        <Label 
+            Grid.Row="0" Grid.Column="2"
+            Text="{Binding Amount, StringFormat='{0:N2} €'}"
+            Style="{StaticResource LabelItem}" />
+
+        <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BoxViewLine}" />
+    </Grid>
+</ContentView>

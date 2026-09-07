@@ -3,7 +3,6 @@ using CommunityToolkit.Maui.Services;
 using FFImageLoading.Maui;
 using Main.Converter;
 using Main.ViewModels;
-using Microsoft.Extensions.Logging;
 using Repository.Dbo;
 using Syncfusion.Maui.Toolkit.Hosting;
 

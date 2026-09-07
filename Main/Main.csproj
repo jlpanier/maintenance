@@ -109,14 +109,34 @@
 
 	<ItemGroup>
 	  <Folder Include="Drawables\" />
-	  <Folder Include="Templates\" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Templates\ProductTemplate.xaml.cs">
+	    <DependentUpon>ProductTemplate.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Templates\WorkTemplate.xaml.cs">
+	    <DependentUpon>WorkTemplate.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\EditNotePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\EditSettingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Templates\ProductTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Templates\WorkTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Templates\NoteTemplate.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

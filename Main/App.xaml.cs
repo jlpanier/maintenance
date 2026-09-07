@@ -12,31 +12,17 @@ namespace Main
 
         }
 
-        protected async Task InitialiseAsync()
+        protected override Window CreateWindow(IActivationState? activationState)
         {
+            var window = new Window(new AppShell());
             try
             {
-                AppPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-                DbPath = Path.Combine(AppPath, "db");
-                ImagePath = Path.Combine(AppPath, "images");
-                FilePath = Path.Combine(AppPath, "file");
-                TmpPath = Path.Combine(AppPath, "tmp");
-                MapPath = Path.Combine(AppPath, "maps");
-                DbFilePath = Path.Combine(DbPath, BaseDbo.DatabaseName);
-
-                Directory.CreateDirectory(AppPath);
-                Directory.CreateDirectory(DbPath);
-                Directory.CreateDirectory(FilePath);
-                Directory.CreateDirectory(TmpPath);
-                Directory.CreateDirectory(ImagePath);
-                Directory.CreateDirectory(MapPath);
-
-                DatabaseAccess.Instance.Init(DbFilePath);
+                _ = Appli.Instance.InitialiseAsync();
             }
             catch (FileNotFoundException)
             {
                 var asset = ServiceHelper.GetService<IAssetService>();
-                await asset.CopyAssetAsync(BaseDbo.DatabaseName, DbPath);
+                _ = asset.CopyAssetAsync(BaseDbo.DatabaseName, Appli.Instance.DbPath);
             }
             catch (Exception ex)
             {
@@ -44,51 +30,11 @@ namespace Main
                 if (!DatabaseAccess.Instance.IsReady())
                 {
                     var asset = ServiceHelper.GetService<IAssetService>();
-                    await asset.CopyAssetAsync(BaseDbo.DatabaseName, DbPath);
+                    _ = asset.CopyAssetAsync(BaseDbo.DatabaseName, Appli.Instance.DbPath);
                 }
             }
-        }
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            var window = new Window(new AppShell());
-            _ = InitialiseAsync();
             return window;
         }
-
-        /// <summary>
-        /// Répertoire interne de l'application
-        /// </summary>
-        public string AppPath { get; private set; } = "";
-
-        /// <summary>
-        /// Répertoire de stockage des cartes
-        /// </summary>
-        public string MapPath { get; private set; } = "";
-
-        /// <summary>
-        /// Chemin des images 
-        /// </summary>
-        public string ImagePath { get; private set; } = "";
-
-        /// <summary>
-        /// Chemin de la base de données
-        /// </summary>
-        public string DbPath { get; private set; } = "";
-
-        /// <summary>
-        /// Chemin complet de la base de données
-        /// </summary>
-        public string DbFilePath { get; private set; } = "";
-
-        /// <summary>
-        /// Chemin de partage des fichiers
-        /// </summary>
-        public string FilePath { get; private set; } = "";
-
-        /// <summary>
-        /// Chemin temporaire des fichiers
-        /// </summary>
-        public string TmpPath { get; private set; } = "";
     }
 }

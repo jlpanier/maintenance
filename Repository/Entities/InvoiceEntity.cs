@@ -1,10 +1,10 @@
 ﻿using SQLite;
 using System.ComponentModel;
 
-namespace Repository.Entities 
+namespace Repository.Entities
 {
-    [Table("SETTINGS")]
-    public partial class SettingsEntity : BaseEntity, INotifyPropertyChanged
+    [Table("INVOICES")]
+    public partial class InvoiceEntity : BaseEntity, INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
 
@@ -42,49 +42,49 @@ namespace Repository.Entities
 
         [Indexed]
         [Column("EffectiveOn")]
-        public string Key
+        public DateTime EffectiveOn
         {
-            get { return _key; }
+            get { return _effectiveOn; }
             set
             {
-                if (_key != value)
+                if (_effectiveOn != value)
                 {
-                    _key = value;
-                    NotifyPropertyChanged(nameof(Key));
+                    _effectiveOn = value;
+                    NotifyPropertyChanged(nameof(EffectiveOn));
                 }
             }
         }
-        private string _key = "";
+        private DateTime _effectiveOn ;
 
-        [Column("Val")]
-        public string Val
+        [Column("Firm")]
+        public string From
         {
-            get { return _val; }
+            get { return _from; }
             set
             {
-                if (_val != value)
+                if (_from != value)
                 {
-                    _val = value;
-                    NotifyPropertyChanged(nameof(Val));
+                    _from = value;
+                    NotifyPropertyChanged(nameof(From));
                 }
             }
         }
-        private string _val="";
+        private string _from = "";
 
-        [Column("ProductName")]
-        public string Desc
+        [Column("Path")]
+        public string Path
         {
-            get { return _desc; }
+            get { return _path; }
             set
             {
-                if (_desc != value)
+                if (_path != value)
                 {
-                    _desc = value;
-                    NotifyPropertyChanged(nameof(Desc));
+                    _path = value;
+                    NotifyPropertyChanged(nameof(Path));
                 }
             }
         }
-        private string _desc="";
+        private string _path = "";
 
         [Column("DateMaj")]
         public DateTime DateMaj

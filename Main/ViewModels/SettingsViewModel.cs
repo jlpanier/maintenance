@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace Main.ViewModels
 {
+    /// <summary>
+    /// Gestion des paramétres de la page de maintenance
+    /// </summary>
     public class SettingsViewModel : BaseViewModel
     {
         /// <summary>
@@ -55,7 +58,7 @@ namespace Main.ViewModels
         {
             await Shell.Current.GoToAsync($"{nameof(EditSettingPage)}", new Dictionary<string, object>
             {
-                ["Key"] = 0,
+                ["EffectiveOn"] = 0,
             });
         }
 
@@ -66,7 +69,7 @@ namespace Main.ViewModels
         {
             await Shell.Current.GoToAsync($"{nameof(EditSettingPage)}", new Dictionary<string, object>
             {
-                ["Key"] = item.Key,
+                ["EffectiveOn"] = item.Key,
             });
         }
 

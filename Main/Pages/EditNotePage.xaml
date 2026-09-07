@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Main.ViewModels"
+    x:Class="Main.Pages.EditNotePage"
+    Title="Note">
+    <ContentPage.BindingContext>
+        <vm:EditNoteViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="22" BackgroundColor="#FAFAFA">
+
+            <Border Style="{StaticResource BorderPrimary}" >
+                <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
+                    <Label Text="Date" Style="{StaticResource LabelPrimary}"/>
+                    <DatePicker Date="{Binding EffectiveOn}" Style="{StaticResource EffectiveDatePicker}" />
+                </VerticalStackLayout>
+            </Border>
+            
+            <Border Style="{StaticResource BorderPrimary}">
+                <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
+                    <Label Text="Description" Style="{StaticResource LabelPrimary}"/>
+                    <Entry Style="{StaticResource EntryPrimary}"  Placeholder="Valeur" Text="{Binding Desc, Mode=TwoWay}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource BorderPrimary}" Padding="12">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" >
+
+                    <HorizontalStackLayout Spacing="6" Grid.Column="0" Grid.Row="0" >
+                        <Button 
+                            Text="+"
+                            ImageSource="{StaticResource IconAdd}"
+                            WidthRequest="24"
+                            HeightRequest="24"
+                            CornerRadius="12"
+                            Padding="4,0,0,0"
+                            BackgroundColor="#00695C"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            TextColor="White"
+                            Command="{Binding ClickAddImageCommand}" />
+
+                        <Label Grid.Column="0" Grid.Row="0"  Text="Média" Margin="6,0,0,0" Padding="0" Style="{StaticResource LabelPrimary}" />
+                    </HorizontalStackLayout>
+
+                    <CollectionView 
+                            Grid.Column="0" Grid.Row="1" 
+                            Margin="0,12,12,12"
+                            ItemsSource="{Binding Images}"
+                            HorizontalScrollBarVisibility="Always"
+                            SelectionMode="None">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="6" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource BorderPrimary}" Padding="6" Stroke="{StaticResource PrimaryDark}">
+
+                                    <Grid>
+                                        <Image 
+                                            Source="{Binding}"
+                                            WidthRequest="115"
+                                            HeightRequest="120"
+                                            Aspect="AspectFill"
+                                            Margin="8" />
+
+                                        <ImageButton
+                                            Source="{StaticResource IconDel}"
+                                            BackgroundColor="{StaticResource PrimaryDark}"
+                                            Padding="0,0,2,0"
+                                            CornerRadius="10"
+                                            WidthRequest="20"
+                                            HeightRequest="20"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Start"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:EditNoteViewModel}}, Path=ClickRemoveImageCommand}"
+                                            CommandParameter="{Binding}" />
+                                    </Grid>
+                                    
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </Grid>
+            </Border>
+
+
+
+            <Button 
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                Style="{StaticResource ButtonFloatingOk}"
+                Command="{Binding ClickSaveCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
