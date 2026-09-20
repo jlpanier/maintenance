@@ -1,5 +1,4 @@
-﻿using Business;
-using FFImageLoading.Helpers;
+﻿using FFImageLoading.Helpers;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 

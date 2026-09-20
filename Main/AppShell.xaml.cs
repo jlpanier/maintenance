@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
-using Main.ViewModels;
 using Font = Microsoft.Maui.Font;
 
 namespace Main 
@@ -17,6 +16,7 @@ namespace Main
             Routing.RegisterRoute(nameof(EditSettingPage), typeof(EditSettingPage));
             Routing.RegisterRoute(nameof(EditNotePage), typeof(EditNotePage));
             Routing.RegisterRoute(nameof(EditWorkPage), typeof(EditWorkPage));
+            Routing.RegisterRoute(nameof(EditProductPage), typeof(EditProductPage));
             Routing.RegisterRoute(nameof(InvoicesPage), typeof(InvoicesPage));
             Routing.RegisterRoute(nameof(EditInvoicePage), typeof(EditInvoicePage));
             Routing.RegisterRoute(nameof(WebViewPage), typeof(WebViewPage));

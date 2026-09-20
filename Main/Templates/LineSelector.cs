@@ -23,8 +23,8 @@ namespace Main.Templates
         {
             return item switch
             {
-                ProductViewModel => ProductTemplate,
-                WorkViewModel => WorkTemplate,
+                Business.Product => ProductTemplate,
+                Business.Work => WorkTemplate,
                 _ => NoteTemplate
             };
         }

@@ -45,17 +45,23 @@ namespace Main.ViewModels
         public override void Init(int key)
         {
             _key = key;
-            var item = Business.Line.GetLine(_key);
+            base.Init(Business.Line.GetLine(_key));
+        }
+
+
+        /// <summary>
+        /// Initialisation de la page 
+        /// </summary>
+        protected override void Init(Business.ILine? item)
+        {
             base.Init(item);
             Invoices = new ObservableCollection<Business.Invoice>(Business.Invoice.All);
-            if (item == null)
-            {
-            }
-            else if (item is Business.Work work)
+            if (item is Business.Work work)
             {
                 SelectedInvoice = Invoices.FirstOrDefault(i => i.Id == work.InvoiceId);
             }
         }
+
 
         /// <summary>
         /// Gestion des factures

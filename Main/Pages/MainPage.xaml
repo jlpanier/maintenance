@@ -25,6 +25,10 @@
             <templates:WorkTemplate />
         </DataTemplate>
 
+        <DataTemplate x:Key="ProductTemplate">
+            <templates:ProductTemplate />
+        </DataTemplate>
+
 
         <!-- ===================== -->
         <!--   TEMPLATE SELECTOR   -->
@@ -34,6 +38,7 @@
             x:Key="Selector"
             NoteTemplate="{StaticResource NoteTemplate}"
             WorkTemplate="{StaticResource WorkTemplate}"
+            ProductTemplate="{StaticResource ProductTemplate}"
             />
 
     </ContentPage.Resources>

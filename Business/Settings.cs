@@ -111,5 +111,19 @@ namespace Business
         /// </summary>
         public string InvoiceSupplierDefault => GetString("invoice.supplier.default", "Hunyvers Nautic - AD Nautic");
 
+        /// <summary>
+        /// Nom par defaut du fournisseur pour les factures
+        /// </summary>
+        public string WorkNameDefault => GetString("work.supplier.default", "Travaux");
+
+        /// <summary>
+        /// Largeur des images
+        /// </summary>
+        public int ImageWidthRequest => GetInt("image.width.default", 72);
+
+        /// <summary>
+        /// Hauteur des images
+        /// </summary>
+        public int ImageHeightRequest => GetInt("image.height.default", 72);
     }
 }
