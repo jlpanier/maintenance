@@ -31,9 +31,14 @@ namespace Main.ViewModels
         public ICommand ClicMenu => new Command(OnMenu);
 
         /// <summary>
+        /// Evenement d'une modification d'une note de maintenance
+        /// </summary>
+        public ICommand ClickProduct => new Command<Product>(OnProduct);
+
+        /// <summary>
         /// Evenement d'ajout d'un produit de maintenance
         /// </summary>
-        public ICommand ClicProduct => new Command(OnProduct);
+        public ICommand ClicNewProduct => new Command(OnNewProduct);
 
         /// <summary>
         /// Evenement d'une modification d'une note de maintenance
@@ -48,7 +53,7 @@ namespace Main.ViewModels
         /// <summary>
         /// Evenement d'ajout d'un travail de maintenance
         /// </summary>
-        public ICommand ClicWork => new Command(OnWork);
+        public ICommand ClickWork => new Command<Work>(OnWork);
 
         /// <summary>
         /// Evenement d'ajout d'un nouvelle note de maintenance
@@ -95,6 +100,7 @@ namespace Main.ViewModels
         /// </summary>
         private async void OnSettings()
         {
+            MenuVisible = false;
             await Shell.Current.GoToAsync(nameof(SettingsPage));
         }
 
@@ -109,17 +115,49 @@ namespace Main.ViewModels
         /// <summary>
         /// Affichage de la page de l'édition produit
         /// </summary>
-        private async void OnProduct()
+        private async void OnNewProduct()
         {
             MenuVisible = false;
+            await Shell.Current.GoToAsync($"{nameof(EditProductPage)}", new Dictionary<string, object>
+            {
+                ["Id"] = 0,
+            });
+        }
+
+        /// <summary>
+        /// Affichage de la page de l'édition produit
+        /// </summary>
+        private async void OnProduct(Product item)
+        {
+            MenuVisible = false;
+            await Shell.Current.GoToAsync($"{nameof(EditProductPage)}", new Dictionary<string, object>
+            {
+                ["Id"] = item.Id,
+            });
+        }
+
+        /// <summary>
+        /// Affichage de la page de l'édition d'une nouvelle ligne de travail
+        /// </summary>
+        private async void OnNewWork()
+        {
+            MenuVisible = false;
+            await Shell.Current.GoToAsync($"{nameof(EditWorkPage)}", new Dictionary<string, object>
+            {
+                ["Id"] = 0,
+            });
         }
 
         /// <summary>
         /// Affichage de la page de l'édition d'un travail
         /// </summary>
-        private async void OnWork()
+        private async void OnWork(Work item)
         {
             MenuVisible = false;
+            await Shell.Current.GoToAsync($"{nameof(EditWorkPage)}", new Dictionary<string, object>
+            {
+                ["Id"] = item.Id,
+            });
         }
 
         /// <summary>
@@ -146,17 +184,7 @@ namespace Main.ViewModels
             });
         }
 
-        /// <summary>
-        /// Affichage de la page de l'édition d'une nouvelle ligne de travail
-        /// </summary>
-        private async void OnNewWork()
-        {
-            MenuVisible = false;
-            await Shell.Current.GoToAsync($"{nameof(EditWorkPage)}", new Dictionary<string, object>
-            {
-                ["Id"] = 0,
-            });
-        }
+
 
         /// <summary>
         /// Gestion des factures

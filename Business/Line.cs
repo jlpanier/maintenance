@@ -34,8 +34,8 @@ namespace Business
         /// </summary>
         private static ILine From(LineEntity item)
         {
-            if (!string.IsNullOrEmpty(item.ProductName))
-            {
+            if (!string.IsNullOrEmpty(item.ProductName) && item.ProductName!=Settings.Instance.WorkNameDefault)
+            { 
                 return new Product(item);
             }
             else if (item.InvoiceId>0)
@@ -100,6 +100,22 @@ namespace Business
         public int Id => Item.Id;
 
         /// <summary>
+        /// Référence à la facture si existante
+        /// </summary>
+        public Invoice? Invoice
+        {
+            get
+            {
+                if (_invoice==null && InvoiceId>0)
+                {
+                    _invoice = Invoice.GetById(InvoiceId);
+                }
+                return _invoice;
+            }
+        }
+        private Invoice? _invoice = null;
+             
+        /// <summary>
         /// Référence de la facture de la ligne de maintenance par sa référence
         /// </summary>
         public int InvoiceId => Item.InvoiceId;
@@ -132,7 +148,39 @@ namespace Business
         /// <summary>
         /// Prix unitaire du produit pour la ligne de maintenance par sa référence
         /// </summary>
-        public double Amount => Item.UnitPrice;
+        public double UnitPrice => Item.UnitPrice;
+
+        /// <summary>
+        /// Prix unitaire du produit pour la ligne de maintenance par sa référence
+        /// </summary>
+        public double TotalAmount => UnitPrice * Quantity;
+
+        /// <summary>
+        /// Fournisseur si facture existante
+        /// </summary>
+        public string Supplier
+        {
+            get
+            {
+                var result = string.Empty;
+                if (Invoice != null)
+                {
+                    result = Invoice.Supplier;
+                }
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Largeur des images
+        /// </summary>
+        public int WidthRequest => Settings.Instance.ImageWidthRequest;
+
+        /// <summary>
+        /// Hauteur des images
+        /// </summary>
+        public int HeightRequest => Settings.Instance.ImageHeightRequest;
+
 
         /// <summary>
         /// Reference à la ligne de maintenance par sa référence

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Main.ViewModels"
+    x:Class="Main.Templates.ProductTemplate">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto" >
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer 
+                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=ClickProduct}"
+                CommandParameter="{Binding}" />
+        </Grid.GestureRecognizers>
+
+        <Image 
+            Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
+            Source="{Binding ImagePath}"
+            Aspect="AspectFit"
+            Margin="12,6,12,6"
+            WidthRequest="{Binding WidthRequest}"
+            HeightRequest="{Binding HeightRequest}"
+            />
+
+        <Label 
+            Grid.Row="0" Grid.Column="1" 
+            Text="{Binding EffectiveOn, StringFormat='{0:dd/MM/yyyy}'}"
+            Style="{StaticResource LabelItem}" 
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            FontAttributes="Bold"
+            Padding="6,0,6,0"
+            />
+        <Label 
+            Grid.Row="0" Grid.Column="2" 
+            Text="{Binding Supplier}"
+            Style="{StaticResource LabelItem}" 
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            FontAttributes="Bold"
+            Padding="6,0,6,0"
+            />
+
+        <Label 
+            Grid.Row="0" Grid.Column="5"
+            Text="{Binding TotalAmount, StringFormat='{0:N2} €'}"
+            Style="{StaticResource LabelItemAmount}" />
+
+
+
+        <Label 
+            Grid.Row="1" Grid.Column="1"
+            Text="{Binding ProductName}"
+            Style="{StaticResource LabelItem}"
+            Padding="6,0,6,0"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            />
+
+        <Label 
+            Grid.Row="1" Grid.Column="2"
+            Text="{Binding UnitPrice}"
+            Style="{StaticResource LabelItemAmount}"
+            Padding="6,0,6,0"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            />
+
+        <Label 
+            Grid.Row="1" Grid.Column="3"
+            Text="x"
+            Style="{StaticResource LabelItemAmount}"
+            Padding="6,0,6,0"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            />
+        
+        <Label 
+            Grid.Row="1" Grid.Column="4"
+            Text="{Binding Quantity}"
+            Style="{StaticResource LabelItemAmount}"
+            Padding="6,0,6,0"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            />
+
+        <Label 
+            Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
+            Text="{Binding Desc}"
+            Style="{StaticResource LabelItem}"
+            Padding="6,0,6,0"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            />
+
+        <BoxView Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="8" Style="{StaticResource BoxViewLine}" />
+    </Grid>
+
+</ContentView>

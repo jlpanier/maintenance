@@ -19,7 +19,7 @@ namespace Business
                 Desc = desc,
                 UnitPrice = invoice.Amount,
                 Quantity = 1,
-                ProductName = "Travaux",
+                ProductName = Settings.Instance.WorkNameDefault,
                 InvoiceId = invoice.Id,
                 DateMaj = DateTime.Now,
             };
@@ -44,7 +44,18 @@ namespace Business
         /// </summary>
         public void Update(DateTime effectiveOn, string desc, IEnumerable<string> images, Invoice invoice)
         {
+            Item.InvoiceId = invoice.Id;
             Item.UnitPrice = invoice.Amount;
+            base.Update(effectiveOn, desc, images);
+        }
+
+        /// <summary>
+        /// Mise à jour à la ligne de maintenance par sa référence
+        /// </summary>
+        public void Update(DateTime effectiveOn, string desc, IEnumerable<string> images, Invoice invoice, double unitPrice)
+        {
+            Item.InvoiceId = invoice.Id;
+            Item.UnitPrice = unitPrice;
             base.Update(effectiveOn, desc, images);
         }
     }
