@@ -1,10 +1,10 @@
 ﻿using SQLite;
 using System.ComponentModel;
 
-namespace Repository.Entities 
+namespace Repository.Entities
 {
-    [Table("SETTINGS")]
-    public partial class SettingsEntity : BaseEntity, INotifyPropertyChanged
+    [Table("LINES")]
+    public partial class LineEntity : BaseEntity, INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
 
@@ -42,36 +42,51 @@ namespace Repository.Entities
 
         [Indexed]
         [Column("EffectiveOn")]
-        public string Key
+        public DateTime EffectiveOn
         {
-            get { return _key; }
+            get { return _effectiveOn; }
             set
             {
-                if (_key != value)
+                if (_effectiveOn != value)
                 {
-                    _key = value;
-                    NotifyPropertyChanged(nameof(Key));
+                    _effectiveOn = value;
+                    NotifyPropertyChanged(nameof(EffectiveOn));
                 }
             }
         }
-        private string _key = "";
+        private DateTime _effectiveOn;
 
-        [Column("Val")]
-        public string Val
+        [Column("InvoiceId")]
+        public int InvoiceId
         {
-            get { return _val; }
+            get { return _invoiceId; }
             set
             {
-                if (_val != value)
+                if (_invoiceId != value)
                 {
-                    _val = value;
-                    NotifyPropertyChanged(nameof(Val));
+                    _invoiceId = value;
+                    NotifyPropertyChanged(nameof(InvoiceId));
                 }
             }
         }
-        private string _val="";
+        private int _invoiceId;
 
         [Column("ProductName")]
+        public string ProductName
+        {
+            get { return _productName; }
+            set
+            {
+                if (_productName != value)
+                {
+                    _productName = value;
+                    NotifyPropertyChanged(nameof(ProductName));
+                }
+            }
+        }
+        private string _productName = "";
+
+        [Column("Desc")]
         public string Desc
         {
             get { return _desc; }
@@ -84,7 +99,37 @@ namespace Repository.Entities
                 }
             }
         }
-        private string _desc="";
+        private string _desc = "";
+
+        [Column("Quantity")]
+        public double Quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                if (_quantity != value)
+                {
+                    _quantity = value;
+                    NotifyPropertyChanged(nameof(Quantity));
+                }
+            }
+        }
+        private double _quantity;
+
+        [Column("UnitPrice")]
+        public double UnitPrice
+        {
+            get { return _amount; }
+            set
+            {
+                if (_amount != value)
+                {
+                    _amount = value;
+                    NotifyPropertyChanged(nameof(UnitPrice));
+                }
+            }
+        }
+        private double _amount;
 
         [Column("DateMaj")]
         public DateTime DateMaj

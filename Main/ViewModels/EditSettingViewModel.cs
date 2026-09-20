@@ -8,12 +8,17 @@ namespace Main.ViewModels
         /// <summary>
         /// Enregistrer 
         /// </summary>
-        public ICommand ClickSaveCommand => new Command(OnSave);
+        public ICommand ClickSave => new Command(OnSave);
 
         /// <summary>
         /// Annuler 
         /// </summary>
-        public ICommand ClickCancelCommand => new Command(OnCancel);
+        public ICommand ClickCancel => new Command(OnCancel);
+
+        /// <summary>
+        /// Annuler 
+        /// </summary>
+        public ICommand ClickDelete => new Command(OnDelete);
 
         /// <summary>
         /// Référence de la configuration
@@ -109,6 +114,18 @@ namespace Main.ViewModels
         /// </summary>
         public async void OnCancel()
         {
+            await Shell.Current.GoToAsync(".."); // Retour à la page précédente
+        }
+
+        /// <summary>
+        /// Supopression de la configuration 
+        /// </summary>
+        public async void OnDelete()
+        {
+            if (_setting != null)
+            {
+                _setting.Delete();
+            }
             await Shell.Current.GoToAsync(".."); // Retour à la page précédente
         }
     }

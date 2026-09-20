@@ -3,35 +3,44 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Main.ViewModels"
-    x:Class="Main.Pages.EditSettingPage"
-    Title="Configuration">
-
+    x:Class="Main.Pages.EditInvoicePage"
+    Title="Facture">
     <ContentPage.BindingContext>
-        <vm:EditSettingViewModel />
+        <vm:EditInvoiceViewModel />
     </ContentPage.BindingContext>
-    
+
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="22">
+        <VerticalStackLayout Padding="20" Spacing="22" BackgroundColor="#FAFAFA">
 
-            <Border StrokeShape="RoundRectangle 24" BackgroundColor="#FFE8E8" Padding="16">
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="Key" FontSize="18" FontAttributes="Bold" />
-                    <Entry Placeholder="Key" Text="{Binding Key, Mode=TwoWay}" />
+            <Border Style="{StaticResource BorderPrimary}" >
+                <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
+                    <Label Text="Date" Style="{StaticResource LabelPrimary}"/>
+                    <DatePicker Date="{Binding EffectiveOn}" Style="{StaticResource EffectiveDatePicker}" />
                 </VerticalStackLayout>
             </Border>
 
-            <Border StrokeShape="RoundRectangle 24" BackgroundColor="#E8F2FF" Padding="16">
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="Valeur" FontSize="18" FontAttributes="Bold" />
-                    <Entry Placeholder="Valeur" Text="{Binding Val, Mode=TwoWay}" VerticalOptions="Center" />
+            <Border Style="{StaticResource BorderPrimary}">
+                <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
+                    <Label Text="Fournisseur" Style="{StaticResource LabelPrimary}"/>
+                    <Entry Style="{StaticResource EntryPrimary}"  Placeholder="Valeur" Text="{Binding Supplier, Mode=TwoWay}" />
                 </VerticalStackLayout>
             </Border>
 
-            <Border StrokeShape="RoundRectangle 24" BackgroundColor="#FFF4E8" Padding="16">
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="Description" FontSize="18" FontAttributes="Bold" />
+            <Border Style="{StaticResource BorderPrimary}">
+                <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
+                    <Label Text="Montant" Style="{StaticResource LabelPrimary}"/>
+                    <Entry Style="{StaticResource EntryPrimary}" Keyboard="Numeric" Placeholder="Montant" Text="{Binding Amount, Mode=TwoWay}" />
+                </VerticalStackLayout>
+            </Border>
 
-                    <Entry Placeholder="Description" Text="{Binding Desc, Mode=TwoWay}" />
+            <Border Style="{StaticResource BorderPrimary}">
+                <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
+                    <Label Text="Factures" Style="{StaticResource LabelPrimary}"/>
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <Label Grid.Column="0" Text="{Binding InvoicePath}" Style="{StaticResource EntryPrimary}" Margin="5" Padding="12,3"/>
+                        <Button Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Style="{StaticResource ButtonSelect}" Command="{Binding ClickInvoice}" />
+                        <Button Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" Style="{StaticResource ButtonSelect}" Text="🔍" IsVisible="{Binding IsInvoiceSelected}" Command="{Binding ClickView}" />
+                    </Grid>
                 </VerticalStackLayout>
             </Border>
 
@@ -74,9 +83,9 @@
                     </HorizontalStackLayout>
                 </Border>
             </Grid>
-
-
+            
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
+    
+    

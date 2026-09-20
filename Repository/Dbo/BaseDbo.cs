@@ -12,7 +12,7 @@ namespace Repository.Dbo
         /// <summary>
         /// Nom de la base de données SQLite
         /// </summary>
-        public const string DatabaseName = "VIDEO.sqlite";
+        public const string DatabaseName = "MAINTENANCE.sqlite";
 
         /// <summary>
         /// Lock pour les accès à la base de données
@@ -64,6 +64,8 @@ namespace Repository.Dbo
             DbPath = databasePath;
             Db.BusyTimeout = TimeSpan.FromSeconds(busyTimeout);
             CreateTable<SettingsEntity>();
+            CreateTable<LineEntity>();
+            CreateTable<InvoiceEntity>();
         }
 
         /// <summary>

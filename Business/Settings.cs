@@ -1,4 +1,5 @@
 ﻿using Repository.Dbo;
+using System.Diagnostics;
 
 namespace Business
 {
@@ -104,6 +105,11 @@ namespace Business
             }
             return result;
         }
+
+        /// <summary>
+        /// Nom par defaut du fournisseur pour les factures
+        /// </summary>
+        public string InvoiceSupplierDefault => GetString("invoice.supplier.default", "Hunyvers Nautic - AD Nautic");
 
     }
 }

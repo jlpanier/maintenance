@@ -1,0 +1,19 @@
+﻿Palette
+Vert principal : #4CAF50
+
+Vert foncé : #388E3C
+
+Vert clair : #C8E6C9
+
+Blanc cassé : #FAFAFA
+
+Gris texte : #333333
+
+🧩 Usage MAUI
+Bouton flottant : #4CAF50
+
+Hover / press : #388E3C
+
+Fond du menu : #FAFAFA
+
+Bordures : #C8E6C9

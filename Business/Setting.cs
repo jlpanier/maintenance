@@ -62,5 +62,13 @@ namespace Business
             Item.Val = val;
             return DatabaseAccess.Instance.Update(Item);
         }
+
+        /// <summary>
+        /// Supression
+        /// </summary>
+        public void Delete()
+        {
+            DatabaseAccess.Instance.Remove(Item);
+        }
     }
 }

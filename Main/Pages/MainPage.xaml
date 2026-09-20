@@ -3,22 +3,109 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Main.ViewModels"
-    BackgroundColor="AliceBlue"
-    Title="Webview">
+    xmlns:selectors="clr-namespace:Main.Templates"
+    xmlns:templates="clr-namespace:Main.Templates"
+    Title="">
 
     <ContentPage.BindingContext>
         <vm:MainViewModel />
     </ContentPage.BindingContext>
 
+    <ContentPage.Resources>
 
-    <Grid RowDefinitions="*" ColumnDefinitions="*">
-        <WebView
-            Grid.Column="0" Grid.Row="0"
-            Navigating="MainWebView_Navigating"
-            x:Name="MainWebView"
-            Source="{Binding Url}"
-            MinimumHeightRequest="300"
-            MinimumWidthRequest="300"
+        <!-- ===================== -->
+        <!--   TEMPLATES PAR TYPE  -->
+        <!-- ===================== -->
+
+        <DataTemplate x:Key="NoteTemplate">
+            <templates:NoteTemplate />
+        </DataTemplate>
+
+        <DataTemplate x:Key="WorkTemplate">
+            <templates:WorkTemplate />
+        </DataTemplate>
+
+
+        <!-- ===================== -->
+        <!--   TEMPLATE SELECTOR   -->
+        <!-- ===================== -->
+
+        <selectors:LineSelector 
+            x:Key="Selector"
+            NoteTemplate="{StaticResource NoteTemplate}"
+            WorkTemplate="{StaticResource WorkTemplate}"
             />
+
+    </ContentPage.Resources>
+
+    <Grid>
+
+        <ScrollView >
+            <Grid RowDefinitions="Auto,*" ColumnDefinitions="*" >
+                <Label 
+                    Grid.Column="0" 
+                    Grid.Row="0" 
+                    Text="Maintenance"
+                    Style="{StaticResource LabelHeader}"
+                    HorizontalOptions="Center"
+                    VerticalTextAlignment="Center">
+                </Label>
+
+                <Border Grid.Row="1" Style="{StaticResource BorderList}" Margin="6" StrokeShape="RoundRectangle 12">
+
+                    <CollectionView 
+                        BackgroundColor="White"
+                        ItemsSource="{Binding Lines}"
+                        ItemTemplate="{StaticResource Selector}"
+                        SelectionMode="None"
+                        VerticalOptions="Fill"
+                        />
+
+                </Border>
+            </Grid>
+        </ScrollView>
+
+        <!-- ================= -->
+        <!--   BOUTON FIXE     -->
+        <!-- ================= -->
+
+        <Border
+            Background="Transparent"
+            StrokeThickness="0"
+            Stroke="Transparent"
+            Padding="6"
+            VerticalOptions="End"
+            HorizontalOptions="Start"
+            Margin="15,0,0,65"
+            IsVisible="{Binding MenuVisible}">
+
+            <VerticalStackLayout Spacing="0" BackgroundColor="white">
+
+                <Button Text="🛒 Produit" Command="{Binding ClicNewProduct}" Style="{StaticResource ButtonMenu}" />
+                <Button Text="🔨 Travaux" Command="{Binding ClicNewWork}" Style="{StaticResource ButtonMenu}" />
+                <Button Text="📝 Note" Command="{Binding ClicNewNote}" Style="{StaticResource ButtonMenu}" />
+                <Button Text="📃 Factures" Command="{Binding ClicInvoices}" Style="{StaticResource ButtonMenu}"/>
+                <Button Text="⚙️ Configuration" Command="{Binding ClicSettings}" Style="{StaticResource ButtonMenu}" />
+
+            </VerticalStackLayout>
+        </Border>
+
+        <Border
+            StrokeThickness="0"
+            HeightRequest="48"
+            WidthRequest="48"
+            StrokeShape="RoundRectangle 24"
+            VerticalOptions="End"
+            HorizontalOptions="Start"
+            Margin="20"
+            Padding="0"
+            >
+
+            <ImageButton
+                Source="ic_menu.png"
+                BackgroundColor="Transparent"
+                Command="{Binding ClicMenu}" />
+        </Border>
     </Grid>
+
 </ContentPage>
