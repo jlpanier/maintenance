@@ -3,10 +3,11 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:Main.ViewModels"
-    x:Class="Main.Pages.EditNotePage"
-    Title="Note">
+    x:Class="Main.Pages.EditWorkPage"
+    Title="Travail">
+    
     <ContentPage.BindingContext>
-        <vm:EditNoteViewModel />
+        <vm:EditWorkViewModel />
     </ContentPage.BindingContext>
 
     <ScrollView>
@@ -18,7 +19,7 @@
                     <DatePicker Date="{Binding EffectiveOn}" Style="{StaticResource EffectiveDatePicker}" />
                 </VerticalStackLayout>
             </Border>
-            
+
             <Border Style="{StaticResource BorderPrimary}">
                 <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
                     <Label Text="Description" Style="{StaticResource LabelPrimary}"/>
@@ -26,6 +27,22 @@
                 </VerticalStackLayout>
             </Border>
 
+
+            <Border Style="{StaticResource BorderPrimary}">
+                <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
+                    <Label Text="Factures" Style="{StaticResource LabelPrimary}"/>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Picker 
+                            ItemsSource="{Binding Invoices}"
+                            SelectedItem="{Binding SelectedInvoice, Mode=TwoWay}"
+                            Style="{StaticResource EntryPrimary}" />
+                        <Button Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Style="{StaticResource ButtonSelect}" Command="{Binding ClickInvoice}" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            
             <Border Style="{StaticResource BorderPrimary}" Padding="12">
                 <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" >
 
@@ -79,7 +96,7 @@
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:EditNoteViewModel}}, Path=ClickRemoveImageCommand}"
                                             CommandParameter="{Binding}" />
                                     </Grid>
-                                    
+
                                 </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -87,8 +104,6 @@
 
                 </Grid>
             </Border>
-
-
 
             <Grid Style="{StaticResource GridValidation}">
                 <Border Style="{StaticResource BorderValidation}" Background="{StaticResource Background}" StrokeShape="RoundRectangle 18">
@@ -128,7 +143,6 @@
                     </HorizontalStackLayout>
                 </Border>
             </Grid>
-
 
         </VerticalStackLayout>
     </ScrollView>

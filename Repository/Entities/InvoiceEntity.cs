@@ -56,8 +56,8 @@ namespace Repository.Entities
         }
         private DateTime _effectiveOn ;
 
-        [Column("Firm")]
-        public string From
+        [Column("Supplier")]
+        public string Supplier
         {
             get { return _from; }
             set
@@ -65,14 +65,14 @@ namespace Repository.Entities
                 if (_from != value)
                 {
                     _from = value;
-                    NotifyPropertyChanged(nameof(From));
+                    NotifyPropertyChanged(nameof(Supplier));
                 }
             }
         }
         private string _from = "";
 
-        [Column("Path")]
-        public string Path
+        [Column("InvoicePath")]
+        public string InvoicePath
         {
             get { return _path; }
             set
@@ -80,11 +80,26 @@ namespace Repository.Entities
                 if (_path != value)
                 {
                     _path = value;
-                    NotifyPropertyChanged(nameof(Path));
+                    NotifyPropertyChanged(nameof(InvoicePath));
                 }
             }
         }
         private string _path = "";
+
+        [Column("UnitPrice")]
+        public double Amount
+        {
+            get { return _amount; }
+            set
+            {
+                if (_amount != value)
+                {
+                    _amount = value;
+                    NotifyPropertyChanged(nameof(Amount));
+                }
+            }
+        }
+        private double _amount;
 
         [Column("DateMaj")]
         public DateTime DateMaj

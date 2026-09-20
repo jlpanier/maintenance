@@ -71,21 +71,6 @@ namespace Repository.Entities
         }
         private int _invoiceId;
 
-        [Column("Firm")]
-        public string Firm
-        {
-            get { return _firm; }
-            set
-            {
-                if (_firm != value)
-                {
-                    _firm = value;
-                    NotifyPropertyChanged(nameof(Firm));
-                }
-            }
-        }
-        private string _firm = "";
-
         [Column("ProductName")]
         public string ProductName
         {
@@ -131,8 +116,8 @@ namespace Repository.Entities
         }
         private double _quantity;
 
-        [Column("Amount")]
-        public double Amount
+        [Column("UnitPrice")]
+        public double UnitPrice
         {
             get { return _amount; }
             set
@@ -140,7 +125,7 @@ namespace Repository.Entities
                 if (_amount != value)
                 {
                     _amount = value;
-                    NotifyPropertyChanged(nameof(Amount));
+                    NotifyPropertyChanged(nameof(UnitPrice));
                 }
             }
         }

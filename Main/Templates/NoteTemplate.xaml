@@ -7,7 +7,7 @@
     <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="Auto,*, Auto" >
         <Grid.GestureRecognizers>
             <TapGestureRecognizer 
-                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=ClickLineCommand}"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=ClickNote}"
                 CommandParameter="{Binding}" />
         </Grid.GestureRecognizers>
         

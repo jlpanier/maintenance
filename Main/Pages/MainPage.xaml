@@ -25,9 +25,6 @@
             <templates:WorkTemplate />
         </DataTemplate>
 
-        <DataTemplate x:Key="ProductTemplate">
-            <templates:ProductTemplate />
-        </DataTemplate>
 
         <!-- ===================== -->
         <!--   TEMPLATE SELECTOR   -->
@@ -37,7 +34,6 @@
             x:Key="Selector"
             NoteTemplate="{StaticResource NoteTemplate}"
             WorkTemplate="{StaticResource WorkTemplate}"
-            ProductTemplate="{StaticResource ProductTemplate}"
             />
 
     </ContentPage.Resources>
@@ -83,11 +79,13 @@
             Margin="15,0,0,65"
             IsVisible="{Binding MenuVisible}">
 
-            <VerticalStackLayout Spacing="3" BackgroundColor="Transparent">
+            <VerticalStackLayout Spacing="0" BackgroundColor="white">
 
-                <Button Text="🛒 Produit" WidthRequest ="120" HorizontalOptions="Start" Command="{Binding ClicProduct}" BackgroundColor="#FAFAFA" TextColor="#333333" />
-                <Button Text="🔨 Travaux" WidthRequest ="120" HorizontalOptions="Start" Command="{Binding ClicWork}" BackgroundColor="#FAFAFA" TextColor="#333333" />
-                <Button Text="📝 Note" WidthRequest ="120" HorizontalOptions="Start" Command="{Binding ClicNote}" BackgroundColor="#FAFAFA" TextColor="#333333" />
+                <Button Text="🛒 Produit" Command="{Binding ClicNewProduct}" Style="{StaticResource ButtonMenu}" />
+                <Button Text="🔨 Travaux" Command="{Binding ClicNewWork}" Style="{StaticResource ButtonMenu}" />
+                <Button Text="📝 Note" Command="{Binding ClicNewNote}" Style="{StaticResource ButtonMenu}" />
+                <Button Text="📃 Factures" Command="{Binding ClicInvoices}" Style="{StaticResource ButtonMenu}"/>
+                <Button Text="⚙️ Configuration" Command="{Binding ClicSettings}" Style="{StaticResource ButtonMenu}" />
 
             </VerticalStackLayout>
         </Border>

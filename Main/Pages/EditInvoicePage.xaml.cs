@@ -3,16 +3,16 @@ using Main.ViewModels;
 namespace Main.Pages;
 
 /// <summary>
-/// Gestion de la page d'édition des notes de maintenance
+/// Gestion de la page d'édition des factures
 /// </summary>
-public partial class EditNotePage : ContentPage, IQueryAttributable
+public partial class EditInvoicePage : ContentPage, IQueryAttributable
 {
     /// <summary>
     /// Applique les attributs de requête
     /// </summary>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (BindingContext is EditNoteViewModel vm)
+        if (BindingContext is EditInvoiceViewModel vm)
         {
             if (query.TryGetValue("Id", out var objId) && objId is int key)
             {
@@ -21,7 +21,7 @@ public partial class EditNotePage : ContentPage, IQueryAttributable
         }
     }
 
-    public EditNotePage()
+    public EditInvoicePage()
 	{
 		InitializeComponent();
 	}

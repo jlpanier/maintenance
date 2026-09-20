@@ -65,6 +65,7 @@ namespace Repository.Dbo
             Db.BusyTimeout = TimeSpan.FromSeconds(busyTimeout);
             CreateTable<SettingsEntity>();
             CreateTable<LineEntity>();
+            CreateTable<InvoiceEntity>();
         }
 
         /// <summary>

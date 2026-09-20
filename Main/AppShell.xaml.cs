@@ -16,6 +16,10 @@ namespace Main
             Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
             Routing.RegisterRoute(nameof(EditSettingPage), typeof(EditSettingPage));
             Routing.RegisterRoute(nameof(EditNotePage), typeof(EditNotePage));
+            Routing.RegisterRoute(nameof(EditWorkPage), typeof(EditWorkPage));
+            Routing.RegisterRoute(nameof(InvoicesPage), typeof(InvoicesPage));
+            Routing.RegisterRoute(nameof(EditInvoicePage), typeof(EditInvoicePage));
+            Routing.RegisterRoute(nameof(WebViewPage), typeof(WebViewPage));
         }
 
         public static async Task DisplaySnackbarAsync(string message)

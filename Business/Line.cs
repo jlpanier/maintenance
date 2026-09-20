@@ -38,7 +38,7 @@ namespace Business
             {
                 return new Product(item);
             }
-            else if (!string.IsNullOrEmpty(item.Firm))
+            else if (item.InvoiceId>0)
             {
                 return new Work(item);
             }
@@ -92,7 +92,7 @@ namespace Business
                 return _medias;
             }
         }
-        private List<Media>? _medias = null;
+        protected List<Media>? _medias = null;
 
         /// <summary>
         /// Référence de ligne de maintenance par sa référence
@@ -120,11 +120,6 @@ namespace Business
         public string Desc => Item.Desc;
 
         /// <summary>
-        /// Companie pour la ligne de maintenance par sa référence
-        /// </summary>
-        public string Firm => Item.Firm;
-
-        /// <summary>
         /// Nom du produit pour la ligne de maintenance par sa référence
         /// </summary>
         public string ProductName => Item.ProductName;
@@ -137,7 +132,7 @@ namespace Business
         /// <summary>
         /// Prix unitaire du produit pour la ligne de maintenance par sa référence
         /// </summary>
-        public double Amount => Item.Amount;
+        public double Amount => Item.UnitPrice;
 
         /// <summary>
         /// Reference à la ligne de maintenance par sa référence
@@ -176,6 +171,19 @@ namespace Business
             Item.Desc = desc;
             Item.EffectiveOn= effectiveOn;
             DatabaseAccess.Instance.Update(Item);
+        }
+
+        /// <summary>
+        /// Suppression des médias associés à la ligne de maintenance et suppression de la ligne de maintenance
+        /// </summary>
+        public void Delete()
+        {
+            foreach (var media in Medias)
+            {
+                media.Del();
+            }
+            All.Remove(this);
+            DatabaseAccess.Instance.Remove(Item);
         }
     }
 }

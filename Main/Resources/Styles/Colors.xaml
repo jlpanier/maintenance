@@ -28,6 +28,7 @@
     <Color x:Key="StrokeColor">#C8E6C9</Color>
     <Color x:Key="ShadowColor">#C8E6C9</Color>
     <Color x:Key="TextColor">#333333</Color>
+    <Color x:Key="TextColorAmount">#00695C</Color>
 
     <!--Vert principal-->
     <Color x:Key="Primary">#4CAF50</Color> 

@@ -1,4 +1,5 @@
-﻿using FFImageLoading.Helpers;
+﻿using Business;
+using FFImageLoading.Helpers;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -12,7 +13,17 @@ namespace Main.ViewModels
         /// <summary>
         /// Sauvegarde des données
         /// </summary>
-        public ICommand ClickSaveCommand => new Command(OnSave);
+        public ICommand ClickSave => new Command(OnSave);
+
+        /// <summary>
+        /// Annulation
+        /// </summary>
+        public ICommand ClickCancel => new Command(OnCancel);
+
+        /// <summary>
+        /// Annulation
+        /// </summary>
+        public ICommand ClickDelete => new Command(OnDelete);
 
         /// <summary>
         /// Ajout d'une image
@@ -75,15 +86,22 @@ namespace Main.ViewModels
         /// <summary>
         /// Référence de la note
         /// </summary>
-        private int _key;
+        protected int _key;
 
         /// <summary>
         /// Initialisation de la page note
         /// </summary>
-        public void Init(int key)
+        public virtual void Init(int key)
         {
             _key=key;
-            var item = Business.Line.GetLine(_key);
+            Init(Business.Line.GetLine(_key));
+        }
+
+        /// <summary>
+        /// Initialisation de la page note
+        /// </summary>
+        protected virtual void Init(Business.ILine? item)
+        {
             if (item == null)
             {
                 EffectiveOn = DateTime.Now.Date;
@@ -93,15 +111,14 @@ namespace Main.ViewModels
             {
                 EffectiveOn = note.EffectiveOn;
                 Desc = note.Desc;
-                Images = new ObservableCollection<string>(note.Medias.Select(_=>_.FileName));
+                Images = new ObservableCollection<string>(note.Medias.Select(_ => _.FileName));
             }
-
         }
 
         /// <summary>
         /// Sauvegarde des données
         /// </summary>
-        public async void OnSave()
+        public async virtual void OnSave()
         {
             try
             {
@@ -121,6 +138,27 @@ namespace Main.ViewModels
             {
                 await ServiceHelper.GetService<IAlertService>()!.ShowAlertAsync(ex);
             }
+        }
+
+        /// <summary>
+        /// Annulation
+        /// </summary>
+        public async virtual void OnCancel()
+        {
+            await Shell.Current.GoToAsync(".."); // Retour à la page précédente
+        }
+
+        /// <summary>
+        /// Suppression de la note
+        /// </summary>
+        public async virtual void OnDelete()
+        {
+            var item = Business.Line.GetLine(_key);
+            if (item is Business.Note note)
+            {
+                note.Delete();
+            }
+            await Shell.Current.GoToAsync(".."); // Retour à la page précédente
         }
 
         /// <summary>
@@ -169,5 +207,7 @@ namespace Main.ViewModels
                 await ServiceHelper.GetService<IAlertService>()!.ShowAlertAsync(ex);
             }
         }
+
+
     }
 }
