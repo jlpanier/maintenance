@@ -31,12 +31,11 @@
 
                     <HorizontalStackLayout Spacing="6" Grid.Column="0" Grid.Row="0" >
                         <Button 
-                            Text="+"
                             ImageSource="{StaticResource IconAdd}"
                             WidthRequest="24"
                             HeightRequest="24"
                             CornerRadius="12"
-                            Padding="4,0,0,0"
+                            Padding="1,0,0,0"
                             BackgroundColor="#00695C"
                             VerticalOptions="Center"
                             HorizontalOptions="Center"
@@ -77,6 +76,18 @@
                                             HorizontalOptions="End"
                                             VerticalOptions="Start"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:EditNoteViewModel}}, Path=ClickRemoveImageCommand}"
+                                            CommandParameter="{Binding}" />
+
+                                        <ImageButton
+                                            Source="{StaticResource IconRotate}"
+                                            BackgroundColor="{StaticResource PrimaryDark}"
+                                            Padding="0,0,0,0"
+                                            CornerRadius="10"
+                                            WidthRequest="20"
+                                            HeightRequest="20"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="End"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:EditNoteViewModel}}, Path=ClickRotateImageCommand}"
                                             CommandParameter="{Binding}" />
                                     </Grid>
                                     

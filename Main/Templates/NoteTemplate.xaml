@@ -5,42 +5,56 @@
     xmlns:vm="clr-namespace:Main.ViewModels"
     x:Class="Main.Templates.NoteTemplate">
 
-   
-    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="Auto,*" >
-        <Grid.GestureRecognizers>
+    <VerticalStackLayout Margin="6,0" Spacing="0">
+        <VerticalStackLayout.GestureRecognizers>
             <TapGestureRecognizer 
                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=ClickNote}"
                 CommandParameter="{Binding}" />
-        </Grid.GestureRecognizers>
-        
-        <Image 
-            Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
-            Source="{Binding ImagePath}"
-            Aspect="AspectFit"
-            Margin="12,6,12,6"
-            WidthRequest="{Binding WidthRequest}"
-            HeightRequest="{Binding HeightRequest}"
-            />
+        </VerticalStackLayout.GestureRecognizers>
+        <Grid ColumnDefinitions="Auto,*" >
+            <Image 
+                Grid.Column="0" 
+                Source="{Binding ImagePath}"
+                Aspect="AspectFit"
+                Margin="6"
+                WidthRequest="{Binding WidthRequest}"
+                HeightRequest="{Binding HeightRequest}"
+                />
+            <VerticalStackLayout Grid.Column="1" Spacing="0" Margin="0,6,6,0">
+                <Label
+                    Text="{Binding EffectiveOn, StringFormat='{0:dd/MM/yyyy}'}"
+                    Style="{StaticResource LabelItem}" 
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    FontAttributes="Bold"
+                    Margin="0"
+                    Padding="0"
+                    />
+
+                <Label 
+                    Text="{Binding Supplier}"
+                    Style="{StaticResource LabelItemSupplier}" 
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    FontAttributes="Italic"
+                    Margin="0"
+                    Padding="0"
+                    />
+                <Label 
+                    Text="{Binding Desc}"
+                    Style="{StaticResource LabelItemDesc}"
+                    Padding="0"
+                    Margin="0"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    />
+
+            </VerticalStackLayout>
+        </Grid>
+
+        <BoxView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BoxViewLine}" />
+
+    </VerticalStackLayout>
 
 
-        <Label 
-            Grid.Row="0" Grid.Column="1" 
-            Text="{Binding EffectiveOn, StringFormat='{0:dd/MM/yyyy}'}"
-            Style="{StaticResource LabelItem}" 
-            HorizontalOptions="Start"
-            VerticalOptions="Start"
-            FontAttributes="Bold"
-            Padding="6,0,6,0"
-            />
-        <Label 
-            Grid.Row="1" Grid.Column="1"
-            Text="{Binding Desc}"
-            Style="{StaticResource LabelItem}"
-            Padding="6,0,6,0"
-            HorizontalOptions="Start"
-            VerticalOptions="Start"
-            />
-
-        <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BoxViewLine}" />
-    </Grid>
 </ContentView>

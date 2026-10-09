@@ -1,4 +1,6 @@
-﻿using FFImageLoading.Helpers;
+﻿using ExCSS;
+using FFImageLoading.Helpers;
+using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -33,6 +35,11 @@ namespace Main.ViewModels
         /// Suppression d'une image
         /// </summary>
         public ICommand ClickRemoveImageCommand => new Command<string>(OnRemove);
+
+        /// <summary>
+        /// Rotation d'une image
+        /// </summary>
+        public ICommand ClickRotateImageCommand => new Command<string>(OnRotate);
 
         /// <summary>
         /// Date d'effet de la note
@@ -90,7 +97,7 @@ namespace Main.ViewModels
         /// <summary>
         /// Initialisation de la page note
         /// </summary>
-        public virtual void Init(int key)
+        public virtual void Init( int key)
         {
             _key=key;
             Init(Business.Line.GetLine(_key));
@@ -169,8 +176,7 @@ namespace Main.ViewModels
             {
                 var result = await FilePicker.Default.PickAsync(new PickOptions
                 {
-                    PickerTitle = "Choisir une image",
-                    FileTypes = FilePickerFileType.Images
+                    PickerTitle = "Choisir une image"
                 });
 
                 if (result != null)
@@ -207,6 +213,26 @@ namespace Main.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// Rotation d'une image à la note
+        /// </summary>
+        public async void OnRotate(string filename)
+        {
+            try
+            {
+                if (Images.Any())
+                {
+                    string outpath = ImageRotationService.RotateImage(filename, 90);
+                    Images.Remove(filename);
+                    var items = Images == null || !Images.Any() ? new List<string>() : new List<string>(Images);
+                    items.Add(outpath);
+                    Images = new ObservableCollection<string>(items);
+                }
+            }
+            catch (Exception ex)
+            {
+                await ServiceHelper.GetService<IAlertService>()!.ShowAlertAsync(ex);
+            }
+        }
     }
 }

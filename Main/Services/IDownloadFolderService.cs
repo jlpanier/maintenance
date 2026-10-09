@@ -2,6 +2,5 @@
 {
     public interface IDownloadFolderService
     {
-        string GetDownloadFolder();
     }
 }

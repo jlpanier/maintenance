@@ -28,18 +28,20 @@
 
             <Border Style="{StaticResource BorderPrimary}">
                 <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
-                    <Label Text="Montant" Style="{StaticResource LabelPrimary}"/>
+                    <Label Text="Montant" Style="{StaticResource LabelPrimary}" />
                     <Entry Style="{StaticResource EntryPrimary}" Keyboard="Numeric" Placeholder="Montant" Text="{Binding Amount, Mode=TwoWay}" />
                 </VerticalStackLayout>
             </Border>
 
             <Border Style="{StaticResource BorderPrimary}">
                 <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
-                    <Label Text="Factures" Style="{StaticResource LabelPrimary}"/>
-                    <Grid ColumnDefinitions="*,Auto,Auto">
+                    <HorizontalStackLayout>
+                        <Button WidthRequest ="30" HeightRequest ="30" Background="Transparent" Style="{StaticResource ButtonSelect}" Text="🔍" IsVisible="{Binding IsInvoiceSelected}" Command="{Binding ClickView}" />
+                        <Label Text="Factures" Style="{StaticResource LabelPrimary}"/>
+                    </HorizontalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto">
                         <Label Grid.Column="0" Text="{Binding InvoicePath}" Style="{StaticResource EntryPrimary}" Margin="5" Padding="12,3"/>
                         <Button Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Style="{StaticResource ButtonSelect}" Command="{Binding ClickInvoice}" />
-                        <Button Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" Style="{StaticResource ButtonSelect}" Text="🔍" IsVisible="{Binding IsInvoiceSelected}" Command="{Binding ClickView}" />
                     </Grid>
                 </VerticalStackLayout>
             </Border>

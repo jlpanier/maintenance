@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Main.ViewModels"
+    x:Class="Main.Pages.EditMaintenancePage"
+    Title="Maintenance">
+
+
+    <ContentPage.BindingContext>
+        <vm:EditMaintenanceViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="22" BackgroundColor="#FAFAFA">
+
+            <Border Style="{StaticResource BorderPrimary}">
+                <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
+                    <Label Text="Nom" Style="{StaticResource LabelPrimary}"/>
+                    <Entry Style="{StaticResource EntryPrimary}"  Placeholder="Maintenance" Text="{Binding Name, Mode=TwoWay}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource BorderPrimary}">
+                <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
+                    <Label Text="Unicode"  Style="{StaticResource LabelPrimary}"/>
+                    <Entry Style="{StaticResource EntryPrimary}"  Placeholder="unicode" Text="{Binding Unicode, Mode=TwoWay}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid Style="{StaticResource GridValidation}">
+                <Border Style="{StaticResource BorderValidation}" Background="{StaticResource Background}" StrokeShape="RoundRectangle 18">
+                    <HorizontalStackLayout Padding="12,3,12,3" Margin="1" Spacing="12">
+                        <Button 
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            HeightRequest="36"
+                            WidthRequest="36"
+                            CornerRadius="18"
+                            Padding="0,3,0,0"
+                            ImageSource="{StaticResource IconButtonValidate}"
+                            BackgroundColor="{StaticResource PrimaryDark}"
+                            Command="{Binding ClickSave}" />
+
+                        <Button 
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            HeightRequest="48"
+                            WidthRequest="48"
+                            CornerRadius="24"
+                            Padding="0"
+                            ImageSource="{StaticResource IconCancel}"
+                            BackgroundColor="{StaticResource PrimaryDark}"
+                            Command="{Binding ClickCancel}" />
+
+                        <Button 
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            HeightRequest="36"
+                            WidthRequest="36"
+                            CornerRadius="18"
+                            Padding="0,0,2,0"
+                            ImageSource="{StaticResource IconDel}"
+                            BackgroundColor="{StaticResource PrimaryDark}"
+                            Command="{Binding ClickDelete}" />
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

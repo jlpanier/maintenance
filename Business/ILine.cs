@@ -8,5 +8,10 @@
         int Id { get; }
 
         DateTime EffectiveOn { get; }
+
+        int MaintenanceObjectId { get; }
+
+        double TotalAmount { get; }
+
     }
 }

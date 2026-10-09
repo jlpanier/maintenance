@@ -7,6 +7,11 @@ namespace Main.ViewModels
     internal class EditWorkViewModel:EditNoteViewModel
     {
         /// <summary>
+        /// Visualisation de la facture courante
+        /// </summary>
+        public ICommand ClickView => new Command(OnView);
+
+        /// <summary>
         /// Sauvegarde des données
         /// </summary>
         public ICommand ClickInvoice => new Command(OnInvoice);
@@ -45,7 +50,7 @@ namespace Main.ViewModels
         public override void Init(int key)
         {
             _key = key;
-            base.Init(Business.Line.GetLine(_key));
+            Init(Business.Line.GetLine(_key));
         }
 
 
@@ -135,6 +140,18 @@ namespace Main.ViewModels
                 work.Delete();
             }
             await Shell.Current.GoToAsync(".."); // Retour à la page précédente
+        }
+
+        /// <summary>
+        /// Visualisation de la facture
+        /// </summary>
+        public async void OnView()
+        {
+            var item = Business.Line.GetLine(_key);
+            if (item is Business.Work line && line.Invoice != null)
+            {
+                PdfOpener.OpenPdf(line.Invoice.Path);
+            }
         }
     }
 }

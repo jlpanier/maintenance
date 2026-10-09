@@ -8,6 +8,7 @@ public partial class InvoicesPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
     /// <summary>
     /// customize behavior immediately prior to the page becoming visible.
     /// </summary>
