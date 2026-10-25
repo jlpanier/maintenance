@@ -125,5 +125,10 @@ namespace Business
         /// Hauteur des images
         /// </summary>
         public int ImageHeightRequest => GetInt("image.height.default", 72);
+
+        /// <summary>
+        /// Nombre de lignes d'affichage
+        /// </summary>
+        public int DisplayItems => GetInt("display.items.nbr", 15);
     }
 }

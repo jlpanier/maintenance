@@ -1,4 +1,6 @@
 ﻿using Business;
+using FFImageLoading.Helpers;
+using Microsoft.Maui.Controls.Shapes;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -10,6 +12,16 @@ namespace Main.ViewModels
     /// </summary>
     public partial class MainViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Exporter les factures dans un fichier zip
+        /// </summary>
+        public ICommand ClickZip => new Command(OnZip);
+
+        /// <summary>
+        /// Gestion de la configuration
+        /// </summary>
+        public ICommand ClickMaintenance => new Command(OnMaintenance);
+        
         /// <summary>
         /// Gestion de la configuration
         /// </summary>
@@ -43,7 +55,7 @@ namespace Main.ViewModels
         /// <summary>
         /// Evenement d'une modification d'une note de maintenance
         /// </summary>
-        public ICommand ClickNote => new Command<Note>(OnNote);
+        public ICommand ClickNote => new Command<Business.Line>(OnNote);
 
         /// <summary>
         /// Evenement d'ajout d'un nouvelle note de maintenance
@@ -61,6 +73,16 @@ namespace Main.ViewModels
         public ICommand ClicNewWork => new Command(OnNewWork);
 
         /// <summary>
+        /// Evenement de sélection de la maintenance précédente
+        /// </summary>
+        public ICommand PreviousCommand => new Command(OnPrevious);
+
+        /// <summary>
+        /// Evenement de sélection de la maintenance suivante
+        /// </summary>
+        public ICommand NextCommand => new Command(OnNext);
+
+        /// <summary>
         /// VRAI, si le popup menu doit être visible
         /// </summary>
         public bool MenuVisible
@@ -73,6 +95,57 @@ namespace Main.ViewModels
             }
         }
         private bool _menuVisible;
+
+        /// <summary>
+        /// Nom de l'objet de maintenance
+        /// </summary>
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    NotifyPropertyChanged(nameof(Name));
+                }
+            }
+        }
+        private string _name = string.Empty;
+
+        /// <summary>
+        /// Montant total dépensé pour le bateau
+        /// </summary>
+        public string TotalAmount
+        {
+            get => _totalAmount;
+            set
+            {
+                if (_totalAmount != value)
+                {
+                    _totalAmount = value;
+                    NotifyPropertyChanged(nameof(TotalAmount));
+                }
+            }
+        }
+        private string _totalAmount = string.Empty;
+
+        /// <summary>
+        /// Montant annuel dépensé pour le bateau
+        /// </summary>
+        public string AnnualAmount
+        {
+            get => _annualAmount;
+            set
+            {
+                if (_annualAmount != value)
+                {
+                    _annualAmount = value;
+                    NotifyPropertyChanged(nameof(AnnualAmount));
+                }
+            }
+        }
+        private string _annualAmount = string.Empty;
 
         /// <summary>
         /// Ensembles des lignes de maintenances
@@ -91,6 +164,24 @@ namespace Main.ViewModels
         }
         public ObservableCollection<Business.ILine> _lines = new ObservableCollection<Business.ILine>();
 
+        /// <summary>
+        /// Zone de recherche du texte de recherche
+        /// </summary>
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (_searchText != value)
+                {
+                    _searchText = value;
+                    NotifyPropertyChanged(nameof(SearchText));
+                    Load(_searchText);
+                }
+            }
+        }
+        private string _searchText = string.Empty;
+
         public MainViewModel()
         {
         }
@@ -102,6 +193,15 @@ namespace Main.ViewModels
         {
             MenuVisible = false;
             await Shell.Current.GoToAsync(nameof(SettingsPage));
+        }
+
+        /// <summary>
+        /// Choix de la maintenance
+        /// </summary>
+        private async void OnMaintenance()
+        {
+            MenuVisible = false;
+            await Shell.Current.GoToAsync(nameof(MaintenancesPage));
         }
 
         /// <summary>
@@ -175,7 +275,7 @@ namespace Main.ViewModels
         /// <summary>
         /// Affichage de la page de l'édition d'une note existante
         /// </summary>
-        private async void OnNote(Note item)
+        private async void OnNote(Business.Line item)
         {
             MenuVisible = false;
             await Shell.Current.GoToAsync($"{nameof(EditNotePage)}", new Dictionary<string, object>
@@ -183,8 +283,6 @@ namespace Main.ViewModels
                 ["Id"] = item.Id,
             });
         }
-
-
 
         /// <summary>
         /// Gestion des factures
@@ -201,9 +299,85 @@ namespace Main.ViewModels
         /// <summary>
         /// Chargement de toutes les lignes de maintenance
         /// </summary>
-        public void Load()
+        public void Load(string filtertext="")
         {
-            Lines = new ObservableCollection<Business.ILine>(Business.Line.All);
+            if (MaintenanceObject.Current!=null)
+            {
+                if (string.IsNullOrWhiteSpace(filtertext))
+                {
+                    Lines = new ObservableCollection<Business.ILine>(Business.Line.All.Where(_ => _.MaintenanceObjectId == MaintenanceObject.Current.Id).OrderByDescending(_ => _.EffectiveOn));
+                }
+                else 
+                {
+                    string search = filtertext.ToLower();
+                    var selecteditems = new List<Business.ILine>();
+                    foreach(var line in Business.Line.All.Where(_ => _.MaintenanceObjectId == MaintenanceObject.Current.Id))
+                    {
+                        if (line.Name.ToLower().Contains(search))
+                        {
+                            selecteditems.Add(line);
+                        }
+                    }
+                    Lines = new ObservableCollection<Business.ILine>(selecteditems.OrderByDescending(_ => _.EffectiveOn));
+                }
+
+                Name = MaintenanceObject.Current.Name;
+                TotalAmount = $"Total {Lines.Sum(_ => _.TotalAmount):N2} €";
+                AnnualAmount = $"Annuel {Lines.Where(_=>_.EffectiveOn > DateTime.Now.AddYears(-1)).Sum(_ => _.TotalAmount):N2} €";
+            }
+        }
+
+        /// <summary>
+        /// Evenement de sélection de la maintenance précédente
+        /// </summary>
+        private void OnPrevious()
+        {
+            MaintenanceObject.Previous();
+            Load();
+        }
+
+        /// <summary>
+        /// Evenement de sélection de la maintenance suivante
+        /// </summary>
+        private void OnNext()
+        {
+            MaintenanceObject.Next();
+            Load();
+        }
+
+        /// <summary>
+        /// Externaliser les factures dans un fichier zip
+        /// </summary>
+        private async void OnZip()
+        {
+            try
+            {
+                MenuVisible = !MenuVisible;
+
+                var files = Directory.GetFiles(Appli.Instance.FilePath, "MAINTENANCE_*.zip");
+                foreach (var file in files)
+                {
+                    File.Delete(file);
+                }
+#if ANDROID
+                var filename = $"MAINTENANCE_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.zip";
+                string zipFile = System.IO.Path.Combine(DownloadFolderService.GetDownloadFolder(), System.IO.Path.GetFileName(filename));
+
+                if (File.Exists(zipFile))
+                {
+                    File.Delete(zipFile);
+                }
+
+                System.IO.Compression.ZipFile.CreateFromDirectory(Appli.Instance.AppPath, zipFile);
+                await ServiceHelper.GetService<IAlertService>()!.ShowAlertAsync($"Le fichier {filename} a été créé avec succès.");
+
+#endif
+
+            }
+            catch (Exception ex)
+            {
+                await ServiceHelper.GetService<IAlertService>()!.ShowAlertAsync(ex);
+            }
         }
     }
 }

@@ -59,6 +59,8 @@ namespace Business
             {
                 EffectiveOn = effectiveOn,
                 Desc = desc,
+                DateMaj=DateTime.Now,
+                MaintenanceObjectId= MaintenanceObject.Current!.Id,
             };
             DatabaseAccess.Instance.Add(item);
 
@@ -100,6 +102,11 @@ namespace Business
         public int Id => Item.Id;
 
         /// <summary>
+        /// Référence de l'objet de maintenance 
+        /// </summary>
+        public int MaintenanceObjectId => Item.MaintenanceObjectId;
+
+        /// <summary>
         /// Référence à la facture si existante
         /// </summary>
         public Invoice? Invoice
@@ -138,7 +145,7 @@ namespace Business
         /// <summary>
         /// Nom du produit pour la ligne de maintenance par sa référence
         /// </summary>
-        public string ProductName => Item.ProductName;
+        public string Name => Item.ProductName;
 
         /// <summary>
         /// Quantité de produit pour la ligne de maintenance par sa référence

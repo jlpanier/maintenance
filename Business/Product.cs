@@ -21,6 +21,7 @@ namespace Business
                 Quantity = quantity,
                 ProductName = productname,
                 InvoiceId = invoice.Id,
+                MaintenanceObjectId = MaintenanceObject.Current!.Id,
                 DateMaj = DateTime.Now,
             };
             DatabaseAccess.Instance.Add(item);

@@ -148,7 +148,7 @@ namespace Main.ViewModels
         {
             try
             {
-                if (!double.TryParse(Amount.Replace(",", "."), out double amount))
+                if (!double.TryParse(Amount.Replace(".", ","), out double amount))
                 {
                     throw new Exception("Montant incorrecte");
                 }
@@ -243,10 +243,7 @@ namespace Main.ViewModels
         /// </summary>
         public async void OnView()
         {
-            await Shell.Current.GoToAsync($"{nameof(WebViewPage)}", new Dictionary<string, object>
-            {
-                ["Path"] = InvoicePath,
-            });
+            PdfOpener.OpenPdf(InvoicePath);
         }
     }
 }

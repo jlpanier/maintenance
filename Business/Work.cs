@@ -21,6 +21,7 @@ namespace Business
                 Quantity = 1,
                 ProductName = Settings.Instance.WorkNameDefault,
                 InvoiceId = invoice.Id,
+                MaintenanceObjectId = MaintenanceObject.Current!.Id,
                 DateMaj = DateTime.Now,
             };
             DatabaseAccess.Instance.Add(item);

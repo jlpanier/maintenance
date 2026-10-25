@@ -66,6 +66,7 @@ namespace Repository.Dbo
             CreateTable<SettingsEntity>();
             CreateTable<LineEntity>();
             CreateTable<InvoiceEntity>();
+            CreateTable<ObjectsEntity>();
         }
 
         /// <summary>

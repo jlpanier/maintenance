@@ -41,7 +41,7 @@ namespace Business
         private static Media? Parse(string fullpath)
         {
             Media? result = null;
-            var regex = new Regex(@"^(?<date>\d{8})_LINE_(?<lineid>\d+)_(?<index>\d+)\.(png|jpe?g|gif|bmp|tiff?|webp)$", RegexOptions.IgnoreCase);
+            var regex = new Regex(@"^(?<date>\d{8})_LINE_(?<lineid>\d+)_(?<index>\d+)\.(png|jpe?g|gif|bmp|heic|tiff?|webp)$", RegexOptions.IgnoreCase);
 
             var match = regex.Match(Path.GetFileName(fullpath));
             if (match.Success)

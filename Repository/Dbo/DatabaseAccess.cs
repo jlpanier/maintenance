@@ -67,5 +67,16 @@ namespace Repository.Dbo
                 return Db.Query<SettingsEntity>("SELECT * FROM SETTINGS");
             }
         }
+
+        /// <summary>
+        /// Chargement des objets de maintenance
+        /// </summary>
+        public IEnumerable<ObjectsEntity> GetMaintenanceObjects()
+        {
+            lock (dbLock)
+            {
+                return Db.Query<ObjectsEntity>("SELECT * FROM OBJECTS");
+            }
+        }
     }
 }

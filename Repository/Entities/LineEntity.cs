@@ -41,6 +41,23 @@ namespace Repository.Entities
         private int _Id;
 
         [Indexed]
+        [Column("MaintenanceObjectId")]
+        public int MaintenanceObjectId
+        {
+            get { return _maintenanceObjectId; }
+            set
+            {
+                if (_maintenanceObjectId != value)
+                {
+                    _maintenanceObjectId = value;
+                    NotifyPropertyChanged(nameof(MaintenanceObjectId));
+                }
+            }
+        }
+        private int _maintenanceObjectId;
+
+
+        [Indexed]
         [Column("EffectiveOn")]
         public DateTime EffectiveOn
         {

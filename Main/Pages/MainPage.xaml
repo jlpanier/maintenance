@@ -45,30 +45,90 @@
 
     <Grid>
 
-        <ScrollView >
-            <Grid RowDefinitions="Auto,*" ColumnDefinitions="*" >
-                <Label 
-                    Grid.Column="0" 
-                    Grid.Row="0" 
-                    Text="Maintenance"
-                    Style="{StaticResource LabelHeader}"
-                    HorizontalOptions="Center"
-                    VerticalTextAlignment="Center">
-                </Label>
-
-                <Border Grid.Row="1" Style="{StaticResource BorderList}" Margin="6" StrokeShape="RoundRectangle 12">
-
-                    <CollectionView 
+        <!-- ===================== -->
+        <!--   HEADER              -->
+        <!-- ===================== -->
+        <Grid RowDefinitions="Auto,Auto,*" >
+            <Grid Grid.Column="0" ColumnDefinitions="*,Auto" >
+                <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,10">
+                    <Label 
+                        Grid.Column="0"
+                        Text="◁"
+                        FontSize="28"
+                        TextColor="#333"
+                        Padding="12,0,12,0"
+                        HorizontalOptions="End"
+                        VerticalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding PreviousCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Button
+                        Grid.Column="1"
+                        Text="{Binding Name}"
+                        TextColor="{StaticResource PrimaryDark}"
                         BackgroundColor="White"
-                        ItemsSource="{Binding Lines}"
-                        ItemTemplate="{StaticResource Selector}"
-                        SelectionMode="None"
-                        VerticalOptions="Fill"
-                        />
+                        Command="{Binding ClickMaintenance}" />
+                    <Label 
+                        Grid.Column="2" Grid.RowSpan="2"
+                        Text="▷"
+                        FontSize="28"
+                        TextColor="#333"
+                        Padding="12,0,12,0"
+                        VerticalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NextCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+                <VerticalStackLayout Grid.Column="1">
+                    <Label 
+                        Text="{Binding TotalAmount}"
+                        FontSize="12"
+                        TextColor="{StaticResource PrimaryDark}"
+                        Padding="6,12,6,0"
+                        HorizontalOptions="End"
+                        VerticalTextAlignment="Center">
+                        </Label>
 
-                </Border>
+                    <Label 
+                        Text="{Binding AnnualAmount}"
+                        FontSize="12"
+                        TextColor="{StaticResource PrimaryDark}"
+                        Padding="6,0,6,0"
+                        HorizontalOptions="End"
+                        VerticalTextAlignment="Center">
+                    </Label>
+                </VerticalStackLayout>
             </Grid>
-        </ScrollView>
+
+
+            <!-- ===================== -->
+            <!--   Zone de recherche   -->
+            <!-- ===================== -->
+
+            <Border Grid.Row="1" StrokeThickness="0" Padding="0,6,12,0" Style="{StaticResource BorderList}">
+                <Grid ColumnDefinitions="Auto,*" >
+                    <Button Grid.Column="0" Style="{StaticResource ButtonSearch}"/>
+                    <Entry Grid.Column="1" Placeholder="Recherche" Text="{Binding SearchText}" Style="{StaticResource EntryPrimary}" ClearButtonVisibility="WhileEditing"/>
+                </Grid>
+            </Border>
+
+            <!-- ======================== -->
+            <!--   LISTE DE MAINTENANCES  -->
+            <!-- ======================== -->
+            
+            <Border Grid.Row="2" Style="{StaticResource BorderList}" Background="White" Margin="6,24,6,12" >
+
+                <CollectionView 
+                    ItemsSource="{Binding Lines}"
+                    ItemTemplate="{StaticResource Selector}"
+                    SelectionMode="None"
+                    VerticalOptions="Fill"
+                    />
+
+            </Border>
+        </Grid>
 
         <!-- ================= -->
         <!--   BOUTON FIXE     -->
@@ -81,15 +141,16 @@
             Padding="6"
             VerticalOptions="End"
             HorizontalOptions="Start"
-            Margin="15,0,0,65"
+            Margin="15,0,0,25"
             IsVisible="{Binding MenuVisible}">
 
-            <VerticalStackLayout Spacing="0" BackgroundColor="white">
+            <VerticalStackLayout Spacing="6" BackgroundColor="white">
 
                 <Button Text="🛒 Produit" Command="{Binding ClicNewProduct}" Style="{StaticResource ButtonMenu}" />
                 <Button Text="🔨 Travaux" Command="{Binding ClicNewWork}" Style="{StaticResource ButtonMenu}" />
                 <Button Text="📝 Note" Command="{Binding ClicNewNote}" Style="{StaticResource ButtonMenu}" />
                 <Button Text="📃 Factures" Command="{Binding ClicInvoices}" Style="{StaticResource ButtonMenu}"/>
+                <Button Text="📦 Téléchargement" Command="{Binding ClickZip}" Style="{StaticResource ButtonMenu}" />
                 <Button Text="⚙️ Configuration" Command="{Binding ClicSettings}" Style="{StaticResource ButtonMenu}" />
 
             </VerticalStackLayout>
@@ -97,8 +158,8 @@
 
         <Border
             StrokeThickness="0"
-            HeightRequest="48"
-            WidthRequest="48"
+            HeightRequest="36"
+            WidthRequest="36"
             StrokeShape="RoundRectangle 24"
             VerticalOptions="End"
             HorizontalOptions="Start"
@@ -111,6 +172,7 @@
                 BackgroundColor="Transparent"
                 Command="{Binding ClicMenu}" />
         </Border>
+
     </Grid>
 
 </ContentPage>
