@@ -77,7 +77,7 @@ internal class EditProductViewModel : EditWorkViewModel
         base.Init(item);
         if (item is Business.Product product)
         {
-            ProductName = product.ProductName;
+            ProductName = product.Name;
             Quantity = product.Quantity.ToString();
             UnitPrice = product.UnitPrice.ToString();
         }

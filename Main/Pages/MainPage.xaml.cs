@@ -24,11 +24,5 @@ namespace Main.Pages
                 vm.Load();
             }
         }
-
-        private void OnScrolled(object sender, ScrolledEventArgs e)
-        {
-            var vm = BindingContext as MainViewModel;
-            vm?.OnScroll(e.ScrollY);
-        }
     }
 }

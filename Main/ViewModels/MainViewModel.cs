@@ -1,4 +1,5 @@
 ﻿using Business;
+using FFImageLoading.Helpers;
 using Microsoft.Maui.Controls.Shapes;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -12,11 +13,15 @@ namespace Main.ViewModels
     public partial class MainViewModel : BaseViewModel
     {
         /// <summary>
+        /// Exporter les factures dans un fichier zip
+        /// </summary>
+        public ICommand ClickZip => new Command(OnZip);
+
+        /// <summary>
         /// Gestion de la configuration
         /// </summary>
         public ICommand ClickMaintenance => new Command(OnMaintenance);
         
-
         /// <summary>
         /// Gestion de la configuration
         /// </summary>
@@ -31,16 +36,6 @@ namespace Main.ViewModels
         /// Evenement de la mise à jour du paramétrages
         /// </summary>
         public ICommand ClickSettingsCommand => new Command(OnSettings);
-
-        /// <summary>
-        /// Clic sur le bouton du menu
-        /// </summary>
-        public ICommand ClicUp => new Command(OnUp);
-
-        /// <summary>
-        /// Clic sur le bouton du menu
-        /// </summary>
-        public ICommand ClicDown => new Command(OnDown);
 
         /// <summary>
         /// Clic sur le bouton du menu
@@ -153,23 +148,6 @@ namespace Main.ViewModels
         private string _annualAmount = string.Empty;
 
         /// <summary>
-        /// Montant annuel dépensé pour le bateau
-        /// </summary>
-        public double LastScrollY
-        {
-            get => _lastScrollY;
-            set
-            {
-                if (_lastScrollY != value)
-                {
-                    _lastScrollY = value;
-                    NotifyPropertyChanged(nameof(LastScrollY));
-                }
-            }
-        }
-        private double _lastScrollY = 0;
-
-        /// <summary>
         /// Ensembles des lignes de maintenances
         /// </summary>
         public ObservableCollection<Business.ILine> Lines
@@ -185,6 +163,24 @@ namespace Main.ViewModels
             }
         }
         public ObservableCollection<Business.ILine> _lines = new ObservableCollection<Business.ILine>();
+
+        /// <summary>
+        /// Zone de recherche du texte de recherche
+        /// </summary>
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (_searchText != value)
+                {
+                    _searchText = value;
+                    NotifyPropertyChanged(nameof(SearchText));
+                    Load(_searchText);
+                }
+            }
+        }
+        private string _searchText = string.Empty;
 
         public MainViewModel()
         {
@@ -288,8 +284,6 @@ namespace Main.ViewModels
             });
         }
 
-
-
         /// <summary>
         /// Gestion des factures
         /// </summary>
@@ -305,12 +299,29 @@ namespace Main.ViewModels
         /// <summary>
         /// Chargement de toutes les lignes de maintenance
         /// </summary>
-        public void Load()
+        public void Load(string filtertext="")
         {
             if (MaintenanceObject.Current!=null)
             {
+                if (string.IsNullOrWhiteSpace(filtertext))
+                {
+                    Lines = new ObservableCollection<Business.ILine>(Business.Line.All.Where(_ => _.MaintenanceObjectId == MaintenanceObject.Current.Id).OrderByDescending(_ => _.EffectiveOn));
+                }
+                else 
+                {
+                    string search = filtertext.ToLower();
+                    var selecteditems = new List<Business.ILine>();
+                    foreach(var line in Business.Line.All.Where(_ => _.MaintenanceObjectId == MaintenanceObject.Current.Id))
+                    {
+                        if (line.Name.ToLower().Contains(search))
+                        {
+                            selecteditems.Add(line);
+                        }
+                    }
+                    Lines = new ObservableCollection<Business.ILine>(selecteditems.OrderByDescending(_ => _.EffectiveOn));
+                }
+
                 Name = MaintenanceObject.Current.Name;
-                Lines = new ObservableCollection<Business.ILine>(Business.Line.All.Where(_ => _.MaintenanceObjectId == MaintenanceObject.Current.Id).OrderByDescending(_ => _.EffectiveOn).Take(Settings.Instance.DisplayItems));
                 TotalAmount = $"Total {Lines.Sum(_ => _.TotalAmount):N2} €";
                 AnnualAmount = $"Annuel {Lines.Where(_=>_.EffectiveOn > DateTime.Now.AddYears(-1)).Sum(_ => _.TotalAmount):N2} €";
             }
@@ -334,75 +345,39 @@ namespace Main.ViewModels
             Load();
         }
 
-        public void OnScroll(double scrollY)
+        /// <summary>
+        /// Externaliser les factures dans un fichier zip
+        /// </summary>
+        private async void OnZip()
         {
-            if (_is_running) return;
-
-            _is_running = true;
-            if (scrollY > LastScrollY)
+            try
             {
-                // Gérer le scroll vers le bas
-                var line = Lines.Last();
-                if (line!=null)
+                MenuVisible = !MenuVisible;
+
+                var files = Directory.GetFiles(Appli.Instance.FilePath, "MAINTENANCE_*.zip");
+                foreach (var file in files)
                 {
-                    var since = line.EffectiveOn;
-                    Lines = new ObservableCollection<Business.ILine>(Business.Line.All.Where(_ => _.MaintenanceObjectId == MaintenanceObject.Current.Id && _.EffectiveOn < since).OrderByDescending(_ => _.EffectiveOn).Take(Settings.Instance.DisplayItems));
+                    File.Delete(file);
                 }
+#if ANDROID
+                var filename = $"MAINTENANCE_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.zip";
+                string zipFile = System.IO.Path.Combine(DownloadFolderService.GetDownloadFolder(), System.IO.Path.GetFileName(filename));
+
+                if (File.Exists(zipFile))
+                {
+                    File.Delete(zipFile);
+                }
+
+                System.IO.Compression.ZipFile.CreateFromDirectory(Appli.Instance.AppPath, zipFile);
+                await ServiceHelper.GetService<IAlertService>()!.ShowAlertAsync($"Le fichier {filename} a été créé avec succès.");
+
+#endif
+
             }
-            else
+            catch (Exception ex)
             {
-                // L’utilisateur scroll vers le haut
-                var line = Lines.First();
-                if (line != null)
-                {
-                    var since = line.EffectiveOn;
-                    Lines = new ObservableCollection<Business.ILine>(Business.Line.All.Where(_ => _.MaintenanceObjectId == MaintenanceObject.Current.Id && _.EffectiveOn > since).OrderByDescending(_ => _.EffectiveOn).Take(Settings.Instance.DisplayItems));
-                }
+                await ServiceHelper.GetService<IAlertService>()!.ShowAlertAsync(ex);
             }
-
-            LastScrollY = scrollY;
-            _is_running = false;
-        }
-        private bool _is_running = false;
-
-
-        public void OnUp()
-        {
-            if (_is_running) return;
-
-            _is_running = true;
-            // L’utilisateur scroll vers le haut
-            var line = Lines.First();
-            if (line != null)
-            {
-                var since = line.EffectiveOn;
-                var items = Business.Line.All.Where(_ => _.MaintenanceObjectId == MaintenanceObject.Current.Id && _.EffectiveOn > since);
-                if (items.Any())
-                {
-                    Lines = new ObservableCollection<Business.ILine>(items.OrderByDescending(_ => _.EffectiveOn).Take(Settings.Instance.DisplayItems));
-                }
-            }
-            _is_running = false;
-        }
-
-        public void OnDown()
-        {
-            if (_is_running) return;
-
-            _is_running = true;
-
-            var line = Lines.Last();
-            if (line != null)
-            {
-                var since = line.EffectiveOn;
-                var items = Business.Line.All.Where(_ => _.MaintenanceObjectId == MaintenanceObject.Current.Id && _.EffectiveOn < since);
-                if (items.Any())
-                {
-                    Lines = new ObservableCollection<Business.ILine>(items.OrderByDescending(_ => _.EffectiveOn).Take(Settings.Instance.DisplayItems));
-                }
-            }
-
-            _is_running = false;
         }
     }
 }

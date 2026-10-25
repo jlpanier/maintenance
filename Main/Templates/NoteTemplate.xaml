@@ -30,16 +30,6 @@
                     Margin="0"
                     Padding="0"
                     />
-
-                <Label 
-                    Text="{Binding Supplier}"
-                    Style="{StaticResource LabelItemSupplier}" 
-                    HorizontalOptions="Start"
-                    VerticalOptions="Start"
-                    FontAttributes="Italic"
-                    Margin="0"
-                    Padding="0"
-                    />
                 <Label 
                     Text="{Binding Desc}"
                     Style="{StaticResource LabelItemDesc}"

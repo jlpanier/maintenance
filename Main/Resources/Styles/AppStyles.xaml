@@ -268,6 +268,20 @@
         <Setter Property="VerticalOptions" Value="Start" />
     </Style>
 
+    <Style x:Key="ButtonSearch" TargetType="Button" BasedOn="{x:Null}">
+        <Setter Property="HeightRequest" Value="36" />
+        <Setter Property="WidthRequest" Value="36" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
+        <Setter Property="Background" Value="{StaticResource Background}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0,0,0,0" />
+        <Setter Property="Text" Value="🔍" />
+    </Style>
+
+    
     <Style x:Key="ButtonFloatingOk" TargetType="Button" BasedOn="{x:Null}">
         <Setter Property="HeightRequest" Value="48" />
         <Setter Property="WidthRequest" Value="48" />
@@ -297,7 +311,7 @@
 
     <Style x:Key="ButtonMenu" TargetType="Button" BasedOn="{x:Null}">
         <Setter Property="HeightRequest" Value="36" />
-        <Setter Property="WidthRequest" Value="120" />
+        <Setter Property="WidthRequest" Value="150" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="CornerRadius" Value="6" />
         <Setter Property="TextColor" Value="{StaticResource TextColor}" />

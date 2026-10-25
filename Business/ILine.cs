@@ -7,6 +7,8 @@
     {
         int Id { get; }
 
+        string Name { get; }
+
         DateTime EffectiveOn { get; }
 
         int MaintenanceObjectId { get; }

@@ -145,7 +145,7 @@ namespace Business
         /// <summary>
         /// Nom du produit pour la ligne de maintenance par sa référence
         /// </summary>
-        public string ProductName => Item.ProductName;
+        public string Name => Item.ProductName;
 
         /// <summary>
         /// Quantité de produit pour la ligne de maintenance par sa référence

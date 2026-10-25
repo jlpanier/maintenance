@@ -77,7 +77,7 @@
                         />
                 </Grid>
                 <Label 
-                    Text="{Binding ProductName}"
+                    Text="{Binding Name}"
                     Style="{StaticResource LabelItemProduct}"
                     Padding="0"
                     Margin="0"
