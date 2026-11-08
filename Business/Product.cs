@@ -11,7 +11,7 @@ namespace Business
         /// <summary>
         /// Créer une ligne de maintenance de travail
         /// </summary>
-        public static ILine Create(DateTime effectiveOn, string desc, IEnumerable<string> images, Invoice invoice, string productname, double quantity, double unitPrice)
+        public static ILine Create(DateTime effectiveOn, string desc, IEnumerable<string> images, Invoice? invoice, string productname, double quantity, double unitPrice)
         {
             var item = new LineEntity
             {
@@ -20,7 +20,7 @@ namespace Business
                 UnitPrice = unitPrice,
                 Quantity = quantity,
                 ProductName = productname,
-                InvoiceId = invoice.Id,
+                InvoiceId = invoice == null ? 0 : invoice.Id,
                 MaintenanceObjectId = MaintenanceObject.Current!.Id,
                 DateMaj = DateTime.Now,
             };
@@ -43,7 +43,7 @@ namespace Business
         /// <summary>
         /// Mise à jour à la ligne de maintenance par sa référence
         /// </summary>
-        public void Update(DateTime effectiveOn, string desc, IEnumerable<string> images, Invoice invoice, string productname, double quantity, double unitPrice)
+        public void Update(DateTime effectiveOn, string desc, IEnumerable<string> images, Invoice? invoice, string productname, double quantity, double unitPrice)
         {
             Item.ProductName = productname;
             Item.Quantity = quantity;

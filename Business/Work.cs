@@ -53,9 +53,9 @@ namespace Business
         /// <summary>
         /// Mise à jour à la ligne de maintenance par sa référence
         /// </summary>
-        public void Update(DateTime effectiveOn, string desc, IEnumerable<string> images, Invoice invoice, double unitPrice)
+        public void Update(DateTime effectiveOn, string desc, IEnumerable<string> images, Invoice? invoice, double unitPrice)
         {
-            Item.InvoiceId = invoice.Id;
+            Item.InvoiceId = invoice == null ? 0 : invoice.Id;
             Item.UnitPrice = unitPrice;
             base.Update(effectiveOn, desc, images);
         }

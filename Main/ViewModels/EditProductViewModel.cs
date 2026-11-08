@@ -1,5 +1,4 @@
 using FFImageLoading.Helpers;
-using System.Windows.Input;
 
 namespace Main.ViewModels;
 
@@ -102,7 +101,11 @@ internal class EditProductViewModel : EditWorkViewModel
 
             if (SelectedInvoice == null)
             {
-                throw new Exception("Sélection d'une facture.");
+                var isok = await ServiceHelper.GetService<IAlertService>()!.ShowConfirmationAsync("Produit", "Achat sans facture?", "Oui", "Non");
+                if (!isok)
+                {
+                    return;
+                }
             }
 
             if (!double.TryParse(UnitPrice.Replace(".", ","), out double unitprice))
