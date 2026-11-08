@@ -150,6 +150,7 @@
                 <Button Text="🔨 Travaux" Command="{Binding ClicNewWork}" Style="{StaticResource ButtonMenu}" />
                 <Button Text="📝 Note" Command="{Binding ClicNewNote}" Style="{StaticResource ButtonMenu}" />
                 <Button Text="📃 Factures" Command="{Binding ClicInvoices}" Style="{StaticResource ButtonMenu}"/>
+                <Button Text="💰 Annuel" Command="{Binding ClicOverview}" Style="{StaticResource ButtonMenu}" />
                 <Button Text="📦 Téléchargement" Command="{Binding ClickZip}" Style="{StaticResource ButtonMenu}" />
                 <Button Text="⚙️ Configuration" Command="{Binding ClicSettings}" Style="{StaticResource ButtonMenu}" />
 

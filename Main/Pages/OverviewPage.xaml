@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dx="http://schemas.devexpress.com/maui"
+             xmlns:vm="clr-namespace:Main.ViewModels"
+             x:Class="Main.Pages.OverviewPage"
+             Title="Dépenses annuelles">
+
+    <Grid>
+        <Grid Padding="20">
+
+
+            <dx:ChartView>
+                <dx:ChartView.Series>
+                    <dx:BarSeries PointColorizer="{vm:CustomColorizer}">
+                        <dx:BarSeries.Data>
+                            <dx:SeriesDataAdapter DataSource="{Binding Data}" ArgumentDataMember="Argument">
+                                <dx:ValueDataMember Member="Value" Type="Value" />
+                            </dx:SeriesDataAdapter>
+                        </dx:BarSeries.Data>
+                    </dx:BarSeries>
+                </dx:ChartView.Series>
+                <dx:ChartView.AxisX>
+                    <dx:DateTimeAxisX MeasureUnit="Year" />
+                </dx:ChartView.AxisX>
+            </dx:ChartView>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

@@ -21,6 +21,7 @@ namespace Main
             Routing.RegisterRoute(nameof(EditInvoicePage), typeof(EditInvoicePage));
             Routing.RegisterRoute(nameof(MaintenancesPage), typeof(MaintenancesPage));
             Routing.RegisterRoute(nameof(EditMaintenancePage), typeof(EditMaintenancePage));
+            Routing.RegisterRoute(nameof(OverviewPage), typeof(OverviewPage));
         }
 
         public static async Task DisplaySnackbarAsync(string message)

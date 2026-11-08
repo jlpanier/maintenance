@@ -13,6 +13,11 @@ namespace Main.ViewModels
     public partial class MainViewModel : BaseViewModel
     {
         /// <summary>
+        /// Affiche la page des dépenses annuelles
+        /// </summary>
+        public ICommand ClicOverview => new Command(OnOverview);
+
+        /// <summary>
         /// Exporter les factures dans un fichier zip
         /// </summary>
         public ICommand ClickZip => new Command(OnZip);
@@ -379,5 +384,15 @@ namespace Main.ViewModels
                 await ServiceHelper.GetService<IAlertService>()!.ShowAlertAsync(ex);
             }
         }
+
+        /// <summary>
+        /// Affichage des dépenses annuelles
+        /// </summary>
+        private async void OnOverview()
+        {
+            MenuVisible = false;
+            await Shell.Current.GoToAsync($"{nameof(OverviewPage)}");
+        }
+        
     }
 }
