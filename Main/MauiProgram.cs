@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Services;
+using DevExpress.Maui;
 using FFImageLoading.Maui;
 using Main.Converter;
 using Main.ViewModels;
@@ -18,6 +19,9 @@ namespace Main
                 .UseMauiCommunityToolkit()
                 .ConfigureSyncfusionToolkit()
                 .UseFFImageLoading()
+                .UseDevExpress()
+                .UseDevExpressControls()
+                .UseDevExpressCharts()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
