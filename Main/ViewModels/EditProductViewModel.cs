@@ -124,7 +124,7 @@ internal class EditProductViewModel : EditWorkViewModel
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(Desc))
+            if (string.IsNullOrWhiteSpace(SelectedCategory))
             {
                 throw new Exception("Une description doit être précisée.");
             }
