@@ -44,10 +44,12 @@
             <Border Style="{StaticResource BorderPrimary}">
                 <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">
                     <Label Text="Description" Style="{StaticResource LabelPrimary}"/>
-                    <Entry Style="{StaticResource EntryPrimary}"  Placeholder="Valeur" Text="{Binding Desc, Mode=TwoWay}" />
+                    <Picker 
+                        ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+                        Style="{StaticResource EntryPrimary}" />
                 </VerticalStackLayout>
             </Border>
-
 
             <Border Style="{StaticResource BorderPrimary}">
                 <VerticalStackLayout Style="{StaticResource VerticalStackLayoutPrimary}">

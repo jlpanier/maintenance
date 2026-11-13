@@ -1,5 +1,4 @@
 ﻿using Repository.Dbo;
-using System.Diagnostics;
 
 namespace Business
 {
@@ -107,6 +106,28 @@ namespace Business
         }
 
         /// <summary>
+        /// Retoiurne une liste d'items
+        /// </summary>
+        private List<string> GetList(string key)
+        {
+            var result = new List<string>();
+            var settings = All.Where(_ => _.Key == key);
+            if (settings != null && settings.Any())
+            {
+                foreach (var setting in settings)
+                {
+                    result.Add(setting.Val);
+                }
+            }
+            else
+            {
+                result.AddRange("Armement","Sécurité","Manutention", "Entretien", "Lecture", "Habitable");
+            }
+            result.Sort();
+            return result;
+        }
+
+        /// <summary>
         /// Nom par defaut du fournisseur pour les factures
         /// </summary>
         public string InvoiceSupplierDefault => GetString("invoice.supplier.default", "Hunyvers Nautic - AD Nautic");
@@ -130,5 +151,11 @@ namespace Business
         /// Nombre de lignes d'affichage
         /// </summary>
         public int DisplayItems => GetInt("display.items.nbr", 15);
+
+        /// <summary>
+        /// Liste des catégories des dépenses
+        /// </summary>
+        public List<string> ExpenseCategories => GetList("product.categories");
+
     }
 }
